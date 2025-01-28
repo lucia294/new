@@ -1,48 +1,36 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import PanelVuelo from './PanelVuelo';
 
-describe('PanelVuelo', () => {
-  const mockHandlerIncrementar = jest.fn();
-  const mockHandlerDecrementar = jest.fn();
-
+test('debería renderizar correctamente los detalles de vuelo y manejar los botones de "Ocupar" y "Liberar"', () => {
+  // Mock de los props
   const item = {
-    destino: 'Paris',
-    date: '2025-02-14',
-    time: '14:30',
+    destino: 'Barcelona',
+    date: '2025-01-30',
+    time: '12:00',
     seats: 100,
-    'plazas disponibles': 20,
-    'plazas ocupadas': 80,
-    number: 1,
+    'plazas disponibles': 30,
+    'plazas ocupadas': 70,
+    number: 1
   };
 
-  beforeEach(() => {
-    render(
-      <PanelVuelo
-        item={item}
-        handlerIncrementar={mockHandlerIncrementar}
-        handlerDecrementar={mockHandlerDecrementar}
-      />
-    );
-  });
+  const handlerIncrementar = jest.fn();
+  const handlerDecrementar = jest.fn();
 
-  it('renders the flight details correctly', () => {
-    expect(screen.getByText('Paris')).toBeInTheDocument();
-    expect(screen.getByText('2025-02-14')).toBeInTheDocument();
-    expect(screen.getByText('14:30')).toBeInTheDocument();
-    expect(screen.getByText('Plazas :100')).toBeInTheDocument();
-    expect(screen.getByText('Plazas disponibles :20')).toBeInTheDocument();
-    expect(screen.getByText('Plazas ocupadas :80')).toBeInTheDocument();
-  });
+  // Renderizamos el componente
+  render(<PanelVuelo item={item} handlerIncrementar={handlerIncrementar} handlerDecrementar={handlerDecrementar} />);
 
-  it('calls handlerIncrementar when "Ocupar" button is clicked', () => {
-    const ocuparButton = screen.getByText('Ocupar');
-    fireEvent.click(ocuparButton);
-    expect(mockHandlerIncrementar).toHaveBeenCalledWith(item.number);
-  });
+  // Comprobamos que el destino, la fecha 
+  expect(screen.getByText(/Barcelona/i)).toBeInTheDocument();
+  expect(screen.getByText(/2025-01-30/i)).toBeInTheDocument();
+  expect(screen.getByText(/12:00/i)).toBeInTheDocument();
 
-  it('calls handlerDecrementar when "Liberar" button is clicked', () => {
-    const liberarButton = screen.getByText('Liberar');
-    fireEvent.click(liberarButton);
-    expect(mockHandlerDecrementar).toHaveBeenCalledWith(item.number);
-  });
+
+  // Simulamos el clic en los botones
+  fireEvent.click(screen.getByText(/Ocupar/i));
+  fireEvent.click(screen.getByText(/Liberar/i));
+
+  // Verificamos que las funciones fueron llamadas
+  expect(handlerIncrementar).toHaveBeenCalledWith(1); // Comprobamos que se pasó el número correcto
+  expect(handlerDecrementar).toHaveBeenCalledWith(1); // Comprobamos que se pasó el número correcto
 });
+

@@ -4,9 +4,9 @@ import NuevoVuelo from './NuevoVuelo'; // Assuming NuevoVuelo is in the same dir
 test('NuevoVuelo renders correctly with initial state', () => {
     render(<NuevoVuelo handler={jest.fn()} />);
 
-    expect(screen.getByLabelText('Destino')).toHaveValue('');
-    expect(screen.getByLabelText('Seats')).toHaveValue('');
-    expect(screen.getByLabelText('Number')).toHaveValue('');
-    expect(screen.getByLabelText('Date')).toHaveValue('2024-12-13');
-    expect(screen.getByLabelText('Time')).toHaveValue('00:00');
+    expect(screen.getByLabelText('destination')).toHaveValue('');
+    expect(screen.getByLabelText('seats')).toHaveValue('');
+    expect(screen.getByLabelText('number')).toHaveValue('');
+    expect(screen.getByLabelText('date')).toHaveValue('2024-12-13');
+    expect(screen.getByLabelText('time')).toHaveValue('00:00');
 });

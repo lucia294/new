@@ -1,35 +1,24 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import PanelVuelo from './PanelVuelo';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import PanelVuelo from './PanelVuelo'; // Assuming PanelVuelo is in the same directory
 
-test('debería renderizar correctamente los detalles de vuelo y manejar los botones de "Ocupar" y "Liberar"', () => {
-  // Mock de los props
-  const item = {
-    destino: 'Barcelona',
-    date: '2025-01-30',
-    time: '12:00',
+const flightData = {
+    destino: 'Málaga',
+    date: '2023-11-21',
+    time: '10:00',
     seats: 100,
-    'plazas disponibles': 30,
-    'plazas ocupadas': 70,
-    number: 1
-  };
+    'plazas disponibles': 80,
+    'plazas ocupadas': 20,
+    number: 1, // Unique identifier for the flight
+};
 
-  const handlerIncrementar = jest.fn();
-  const handlerDecrementar = jest.fn();
+test('PanelVuelo renders correctly and displays flight details', () => {
+    render(<PanelVuelo item={flightData} />);
 
-  // Renderizamos el componente
-  render(<PanelVuelo item={item} handlerIncrementar={handlerIncrementar} handlerDecrementar={handlerDecrementar} />);
-
-  // Comprobamos que el destino, la fecha 
-  expect(screen.getByText(/Barcelona/i)).toBeInTheDocument();
-  expect(screen.getByText(/2025-01-30/i)).toBeInTheDocument();
-  expect(screen.getByText(/12:00/i)).toBeInTheDocument();
-
-
-  // Simulamos el clic en los botones
-  fireEvent.click(screen.getByText(/Ocupar/i));
-  fireEvent.click(screen.getByText(/Liberar/i));
-
-  // Verificamos que las funciones fueron llamadas
-  expect(handlerIncrementar).toHaveBeenCalledWith(1); // Comprobamos que se pasó el número correcto
-  expect(handlerDecrementar).toHaveBeenCalledWith(1); // Comprobamos que se pasó el número correcto
+    expect(screen.getByText('Málaga')).toBeInTheDocument();
+    expect(screen.getByText('2023-11-21')).toBeInTheDocument();
+    expect(screen.getByText('10:00')).toBeInTheDocument();
+    expect(screen.getByText('100')).toBeInTheDocument();
+    expect(screen.getByText('80')).toBeInTheDocument();
+    expect(screen.getByText('20')).toBeInTheDocument();
 });

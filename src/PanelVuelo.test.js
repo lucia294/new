@@ -1,24 +1,48 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import PanelVuelo from './PanelVuelo'; // Assuming PanelVuelo is in the same directory
+import { render, screen, fireEvent } from '@testing-library/react';
+import PanelVuelo from './PanelVuelo';
 
-const flightData = {
-    destino: 'Málaga',
-    date: '2023-11-21',
-    time: '10:00',
+describe('PanelVuelo', () => {
+  const mockHandlerIncrementar = jest.fn();
+  const mockHandlerDecrementar = jest.fn();
+
+  const item = {
+    destino: 'Paris',
+    date: '2025-02-14',
+    time: '14:30',
     seats: 100,
-    'plazas disponibles': 80,
-    'plazas ocupadas': 20,
-    number: 1, // Unique identifier for the flight
-};
+    'plazas disponibles': 20,
+    'plazas ocupadas': 80,
+    number: 1,
+  };
 
-test('PanelVuelo renders correctly and displays flight details', () => {
-    render(<PanelVuelo item={flightData} />);
+  beforeEach(() => {
+    render(
+      <PanelVuelo
+        item={item}
+        handlerIncrementar={mockHandlerIncrementar}
+        handlerDecrementar={mockHandlerDecrementar}
+      />
+    );
+  });
 
-    expect(screen.getByText('Málaga')).toBeInTheDocument();
-    expect(screen.getByText('2023-11-21')).toBeInTheDocument();
-    expect(screen.getByText('10:00')).toBeInTheDocument();
-    expect(screen.getByText('100')).toBeInTheDocument();
-    expect(screen.getByText('80')).toBeInTheDocument();
-    expect(screen.getByText('20')).toBeInTheDocument();
+  it('renders the flight details correctly', () => {
+    expect(screen.getByText('Paris')).toBeInTheDocument();
+    expect(screen.getByText('2025-02-14')).toBeInTheDocument();
+    expect(screen.getByText('14:30')).toBeInTheDocument();
+    expect(screen.getByText('Plazas :100')).toBeInTheDocument();
+    expect(screen.getByText('Plazas disponibles :20')).toBeInTheDocument();
+    expect(screen.getByText('Plazas ocupadas :80')).toBeInTheDocument();
+  });
+
+  it('calls handlerIncrementar when "Ocupar" button is clicked', () => {
+    const ocuparButton = screen.getByText('Ocupar');
+    fireEvent.click(ocuparButton);
+    expect(mockHandlerIncrementar).toHaveBeenCalledWith(item.number);
+  });
+
+  it('calls handlerDecrementar when "Liberar" button is clicked', () => {
+    const liberarButton = screen.getByText('Liberar');
+    fireEvent.click(liberarButton);
+    expect(mockHandlerDecrementar).toHaveBeenCalledWith(item.number);
+  });
 });

@@ -1,3 +1,5 @@
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=lucia294_new&metric=alert_status&token=8fb685f03a68464171c5409a2f30ddefcb1917ed)](https://sonarcloud.io/summary/new_code?id=lucia294_new)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -10,5 +10,11 @@ test('debería renderizar el componente Vuelos dentro de App', () => {
   expect(vuelosElement).toBeInTheDocument();
 });
 
+test('debería renderizar el componente Vuelos dentro de App', () => {
+  render(<App />);
+
+  // Verificamos que el componente Vuelos esté presente en el documento
+  expect(screen.getByText(/Vuelos/i)).toBeInTheDocument();
+});
 
 

@@ -1,3 +1,5 @@
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=lucia294_new&metric=coverage&token=8fb685f03a68464171c5409a2f30ddefcb1917ed)](https://sonarcloud.io/summary/new_code?id=lucia294_new)
+
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=lucia294_new&metric=alert_status&token=8fb685f03a68464171c5409a2f30ddefcb1917ed)](https://sonarcloud.io/summary/new_code?id=lucia294_new)
 
 # Getting Started with Create React App

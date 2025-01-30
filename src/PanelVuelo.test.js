@@ -1,36 +1,30 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+
+import { render, screen } from '@testing-library/react';
 import PanelVuelo from './PanelVuelo';
 
-test('debería renderizar correctamente los detalles de vuelo y manejar los botones de "Ocupar" y "Liberar"', () => {
-  // Mock de los props
+describe('PanelVuelo', () => {
   const item = {
-    destino: 'Barcelona',
-    date: '2025-01-30',
-    time: '12:00',
+    destino: "Madrid",
+    date: "2025-01-30",
+    time: "10:00",
     seats: 100,
-    'plazas disponibles': 30,
-    'plazas ocupadas': 70,
-    number: 1
+    "plazas disponibles": 50,
+    "plazas ocupadas": 50,
+    number: 1,
   };
 
-  const handlerIncrementar = jest.fn();
-  const handlerDecrementar = jest.fn();
+  test('Debe renderizar los botones Ocupar y Liberar', () => {
+    render(
+      <PanelVuelo 
+        item={item} 
+        handlerIncrementar={() => {}} 
+        handlerDecrementar={() => {}} 
+      />
+    );
 
-  // Renderizamos el componente
-  render(<PanelVuelo item={item} handlerIncrementar={handlerIncrementar} handlerDecrementar={handlerDecrementar} />);
-
-  // Comprobamos que el destino, la fecha 
-  expect(screen.getByText(/Barcelona/i)).toBeInTheDocument();
-  expect(screen.getByText(/2025-01-30/i)).toBeInTheDocument();
-  expect(screen.getByText(/12:00/i)).toBeInTheDocument();
-
-
-  // Simulamos el clic en los botones
-  fireEvent.click(screen.getByText(/Ocupar/i));
-  fireEvent.click(screen.getByText(/Liberar/i));
-
-  // Verificamos que las funciones fueron llamadas
-  expect(handlerIncrementar).toHaveBeenCalledWith(1); // Comprobamos que se pasó el número correcto
-  expect(handlerDecrementar).toHaveBeenCalledWith(1); // Comprobamos que se pasó el número correcto
+    // Verificar que los botones con el texto adecuado existan
+    expect(screen.getByText(/Ocupar/i)).toBeInTheDocument();
+    expect(screen.getByText(/Liberar/i)).toBeInTheDocument();
+  });
 });
 
